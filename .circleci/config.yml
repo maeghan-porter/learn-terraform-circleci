@@ -1,5 +1,6 @@
-version: 2
-
+version: 2.1
+orbs:
+  aws-assume-role: holdaraffle/aws-assume-role@0.0.10
 jobs:
   plan-apply:
     working_directory: /tmp/project
@@ -7,6 +8,9 @@ jobs:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
       - checkout
+      - aws-assume-role/assume-role:
+          account: 037041210863
+          role: admin
       - run:
           name: terraform init & plan
           command: |
@@ -21,6 +25,9 @@ jobs:
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
+      - aws-assume-role/assume-role:
+          account: 037041210863
+          role: admin
       - attach_workspace:
           at: .
       - run:
@@ -36,6 +43,9 @@ jobs:
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
+      - aws-assume-role/assume-role:
+          account: 037041210863
+          role: admin
       - attach_workspace:
           at: .
       - run:
@@ -51,6 +61,9 @@ jobs:
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
+      - aws-assume-role/assume-role:
+          account: 037041210863
+          role: admin
       - attach_workspace:
           at: .
       - run:
